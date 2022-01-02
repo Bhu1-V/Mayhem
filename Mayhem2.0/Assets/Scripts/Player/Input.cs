@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Input : MonoBehaviour
 {
-    [SerializeField] Movement movement;
-    [SerializeField] MouseLook mouseLook;
+    [SerializeField] PlayerMovement playerMovement;
     [SerializeField] TimeControl timeControl;
     [SerializeField] WeaponController weaponController;
 
@@ -27,19 +26,19 @@ public class Input : MonoBehaviour
 
         groundMovement.Move.performed += ctx => horizontalInput = ctx.ReadValue<Vector2>();
 
-        groundMovement.Jump.performed += _ => movement.OnJumpPressed();
-        groundMovement.Jump.canceled += _ => movement.OnJumpExit();
+        groundMovement.Jump.performed += _ => playerMovement.OnJumpPressed();
+        groundMovement.Jump.canceled += _ => playerMovement.OnJumpExit();
 
-        groundMovement.Slide.performed += _ => movement.OnSlide();
-        groundMovement.Slide.canceled += _ => movement.OnSlideExit();
+        groundMovement.Slide.performed += _ => playerMovement.OnCrouchPressed();
+        groundMovement.Slide.canceled += _ => playerMovement.OnCrouchExit();
         
-        groundMovement.Dodge.performed += _ => movement.OnDodge();
-        groundMovement.Dodge.canceled += _ => movement.OnDodgeExit();
+        //groundMovement.Dodge.performed += _ => movement.OnDodge();
+        //groundMovement.Dodge.canceled += _ => movement.OnDodgeExit();
 
         groundMovement.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
         groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
 
-        inGame.CursorControl.performed += _ => mouseLook.ToogleCursor();
+        inGame.CursorControl.performed += _ => playerMovement.ToogleCursor();
 
         gameplayActions.slowmo.performed += _ => timeControl.StartBulletTime();
         gameplayActions.slowmo.canceled += _ => timeControl.EndBulletTime();
@@ -52,8 +51,8 @@ public class Input : MonoBehaviour
 
     private void Update()
     {
-        movement.ReceiveInput(horizontalInput);
-        mouseLook.ReceiveInput(mouseInput);
+        // movement.ReceiveInput(horizontalInput);
+        playerMovement.ReceiveInput(horizontalInput);
     }
 
     private void OnEnable()

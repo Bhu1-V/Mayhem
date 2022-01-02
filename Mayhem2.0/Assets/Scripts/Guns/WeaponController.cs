@@ -96,8 +96,8 @@ public class WeaponController : MonoBehaviour
         /*camShake.Shake(camShakeDuration, camShakeMagnitude);*/
 
         //Graphics
-        Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+        //Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+        //Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
 
         bulletsLeft--;
         bulletsShot--;
